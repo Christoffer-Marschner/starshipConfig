@@ -1,23 +1,77 @@
 
-# Get editor completions based on the config schema
-"$schema" = 'https://starship.rs/config-schema.json'
-
-# Inserts a blank line between shell prompts
-add_newline = true
+add_newline = false
 
 format = """
 $directory\
-$cmd_duration\
+$custom\
+$username\
+$hostname\
+$os\
+$shell
+$sudo\
 $character
 """
 
-# Replace the '❯' symbol in the prompt with '➜'
-[character] # The name of the module we are configuring is 'character'
-success_symbol = '[➜](bold green)' # The 'success_symbol' segment is being set to '➜' with the color 'bold green'
-error_symbol   = '[➜](red)' # The 'success_symbol' segment is being set to '➜' with the color 'bold green'
+right_format = """
+$git_branch\
+$git_metrics\
+$custom\
+$cmd_duration\
+$time
+"""
 
-[cmd_duration]
-format = '[$duration]'
-show_milliseconds = true
+[ custom.separator ]
+when = true
+format = "[$symbol]($style) "
+symbol = "|"
+style = "white"
+
+[ username ]
+format = "[$user]($style)@"
+show_always = true
+
+[ time ]
 disabled = false
+format = "[$time]($style) "
+time_format = "%H:%M"
+
+[ sudo ]
+disabled = false
+format = "[$symbol]($style) "
+symbol = "*"
+
+[ shell ]
+disabled = false
+unknown_indicator = "?sh"
+
+[ os ]
+disabled = false
+format = "[$symbol]($style)"
+
+[ hostname ]
+format = "[$hostname]($style) "
+style = "cyan"
+ssh_only = false
+
+[ git_metrics ]
+disabled = false
+format = "[+$added]($added_style)[-$deleted]($deleted_style) "
+
+[ git_branch ]
+format = "[$branch]($style) "
+style = "bold red"
+only_attached = true
+
+[ directory ]
+fish_style_pwd_dir_length = 1
+read_only = " "
+
+[ cmd_duration ]
+min_time = 0
+show_milliseconds = true
+format = "[$duration]($style) "
+
+[ character ]
+success_symbol = "[](green)"
+error_symbol = "[](red)"
 
