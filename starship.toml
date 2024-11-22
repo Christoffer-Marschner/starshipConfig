@@ -16,16 +16,6 @@ $git_metrics\
 $character
 """
 
-[ custom.sectionClose ]
-format = "[$symbol]($style)"
-when = true
-symbol = '\]'
-
-[ custom.sectionOpen ]
-format = "[$symbol]($style)"
-when = true
-symbol = '\['
-
 [ fill ]
 symbol = " "
 
