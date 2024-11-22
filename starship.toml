@@ -1,77 +1,78 @@
 
 add_newline = false
 
+continuation_prompt = "| "
+
 format = """
-$directory\
-$custom\
-$username\
-$hostname\
-$os\
-$shell
+|$username@$hostname|\
+|$directory|\
+$git_branch\
 $sudo\
+$fill\
+|$shell|\
+$git_metrics\
+|$cmd_duration|\
+|$time| 
 $character
 """
 
-right_format = """
-$git_branch\
-$git_metrics\
-$custom\
-$cmd_duration\
-$time
-"""
-
-[ custom.separator ]
+[ custom.sectionClose ]
+format = "[$symbol]($style)"
 when = true
-format = "[$symbol]($style) "
-symbol = "|"
-style = "white"
+symbol = '\]'
+
+[ custom.sectionOpen ]
+format = "[$symbol]($style)"
+when = true
+symbol = '\['
+
+[ fill ]
+symbol = " "
 
 [ username ]
-format = "[$user]($style)@"
+format = "[$user]($style)"
 show_always = true
 
 [ time ]
 disabled = false
-format = "[$time]($style) "
+format = "[$time]($style)"
 time_format = "%H:%M"
 
 [ sudo ]
 disabled = false
-format = "[$symbol]($style) "
-symbol = "*"
+format = "|[$symbol]($style)|"
+symbol = "s"
 
 [ shell ]
 disabled = false
+format = "[$indicator]($style)"
 unknown_indicator = "?sh"
 
-[ os ]
-disabled = false
-format = "[$symbol]($style)"
-
 [ hostname ]
-format = "[$hostname]($style) "
+format = "[$hostname]($style)"
 style = "cyan"
 ssh_only = false
 
 [ git_metrics ]
 disabled = false
-format = "[+$added]($added_style)[-$deleted]($deleted_style) "
+format = "|([+$added]($added_style))|([-$deleted]($deleted_style))|"
 
 [ git_branch ]
-format = "[$branch]($style) "
+format = "|[$branch]($style)|"
 style = "bold red"
 only_attached = true
 
 [ directory ]
+format = "[$path]($style)[$read_only]($read_only_style)"
 fish_style_pwd_dir_length = 1
-read_only = " "
+read_only = '(ro)'
 
 [ cmd_duration ]
 min_time = 0
 show_milliseconds = true
-format = "[$duration]($style) "
+format = "[$duration]($style)"
 
 [ character ]
-success_symbol = "[](green)"
-error_symbol = "[](red)"
+success_symbol = "[>](green)"
+error_symbol = "[>](red)"
 
