@@ -1,77 +1,80 @@
 
 add_newline = false
 
+continuation_prompt = "| "
+
 format = """
-$directory\
-$custom\
-$username\
-$hostname\
-$os\
-$shell
+|$username@$hostname|\
+|$directory|\
+$git_branch\
 $sudo\
+$fill\
+|$time|\ 
+$fill\
+|$shell|\
+$git_metrics\
+|$cmd_duration|
 $character
 """
 
-right_format = """
-$git_branch\
-$git_metrics\
-$custom\
-$cmd_duration\
-$time
-"""
-
-[ custom.separator ]
-when = true
-format = "[$symbol]($style) "
-symbol = "|"
-style = "white"
-
 [ username ]
-format = "[$user]($style)@"
+format = "[$user]($style)"
 show_always = true
+style_user = "blue"
 
-[ time ]
-disabled = false
-format = "[$time]($style) "
-time_format = "%H:%M"
+[ hostname ]
+format = "[$hostname]($style)"
+style = "blue"
+ssh_only = false
+
+[ directory ]
+format = "[$path]($style)[$read_only]($read_only_style)"
+fish_style_pwd_dir_length = 1
+read_only = ' ro'
+style = "underline purple"
+read_only_style = 'red'
+
+[ git_branch ]
+format = "|[$branch]($style)|"
+style = "italic red"
+only_attached = true
 
 [ sudo ]
 disabled = false
-format = "[$symbol]($style) "
-symbol = "*"
+format = "|[$symbol]($style)|"
+symbol = "s"
+style = "underline cyan"
+
+[ fill ]
+symbol = " "
+
+[ time ]
+disabled = false
+format = "[$time]($style)"
+time_format = "%H:%M"
+style = "inverted yellow"
+
+# fill #
 
 [ shell ]
 disabled = false
+format = "[$indicator]($style)"
 unknown_indicator = "?sh"
-
-[ os ]
-disabled = false
-format = "[$symbol]($style)"
-
-[ hostname ]
-format = "[$hostname]($style) "
-style = "cyan"
-ssh_only = false
+style = "blue"
 
 [ git_metrics ]
 disabled = false
-format = "[+$added]($added_style)[-$deleted]($deleted_style) "
-
-[ git_branch ]
-format = "[$branch]($style) "
-style = "bold red"
-only_attached = true
-
-[ directory ]
-fish_style_pwd_dir_length = 1
-read_only = " "
+format = "|([+$added]($added_style))|([-$deleted]($deleted_style))|"
+added_style = "underline green"
+deleted_style = "underline red"
 
 [ cmd_duration ]
 min_time = 0
 show_milliseconds = true
-format = "[$duration]($style) "
+format = "[$duration]($style)"
+style = "italic yellow"
 
 [ character ]
-success_symbol = "[](green)"
-error_symbol = "[](red)"
+success_symbol = " [>](green)"
+error_symbol = " [>](red underline)"
 
